@@ -1,0 +1,177 @@
+version: '3.1'
+name: RSOI_CP
+
+services:
+  pg_db:
+    image: postgres:16-alpine
+    container_name: pg_db
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./backend/pg_data_db:/var/lib/postgresql/data
+      - ./backend/db_sql/:/docker-entrypoint-initdb.d/
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    restart: "no"
+    links:
+      - zookeeper
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL://:29092,EXTERNAL://:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:29092,EXTERNAL://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+    healthcheck:
+      test: ["CMD-SHELL", "ls"]
+      interval: 2s
+      timeout: 2s
+      retries: 5
+
+  fontend:
+    image: frontend
+    container_name: frontend
+    build:
+      context: "."
+      dockerfile: ./frontend/docker/Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - default
+
+  auth_service:
+    image: auth_service
+    container_name: auth_service
+    build:
+      context: "."
+      dockerfile: ./backend/docker/auth.Dockerfile
+    ports:
+      - "8888:8888"
+    networks:
+      - default
+    depends_on:
+      pg_db:
+        condition: service_healthy
+
+  statistics_service:
+    image: statistics_service
+    container_name: statistics_service
+    build:
+      context: "."
+      dockerfile: ./backend/docker/statistics.Dockerfile
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+    ports:
+      - "8090:8090"
+    networks:
+      - default
+    depends_on:
+      pg_db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+
+  comsumer_service:
+    image: comsumer_service
+    container_name: comsumer_service
+    build:
+      context: "."
+      dockerfile: ./backend/docker/consumer.Dockerfile
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - KAFKA_GROUP_ID=my-group
+    networks:
+      - default
+    depends_on:
+      pg_db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+
+  gateway_service:
+    image: gateway_service
+    container_name: gateway_service
+    build:
+      context: "."
+      dockerfile: ./backend/docker/gateway.Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - default
+
+  library_service:
+    image: library_service
+    container_name: library_service
+    build:
+      context: "."
+      dockerfile: ./backend/docker/library.Dockerfile
+    ports:
+      - "8060:8060"
+    networks:
+      - default
+    depends_on:
+      pg_db:
+        condition: service_healthy
+
+  rating_service:
+    image: rating_service
+    container_name: rating_service
+    build:
+      context: "."
+      dockerfile: ./backend/docker/rating.Dockerfile
+    ports:
+      - "8050:8050"
+    networks:
+      - default
+    depends_on:
+      pg_db:
+        condition: service_healthy
+
+  reservation_service:
+    image: reservation_service
+    container_name: reservation_service
+    build:
+      context: "."
+      dockerfile: ./backend/docker/reservation.Dockerfile
+    ports:
+      - "8070:8070"
+    networks:
+      - default
+    depends_on:
+      pg_db:
+        condition: service_healthy
+
+
+volumes:
+  pg_data:
+    driver: local
+
+networks:
+  default:

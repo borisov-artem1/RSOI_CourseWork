@@ -1,0 +1,71 @@
+databases:
+  auth_db:
+    user: postgres
+    password: password
+    db: auth
+    host: pg_db
+    port: 5432
+  library_db:
+    user: postgres
+    password: password
+    db: libraries
+    host: pg_db
+    port: 5432
+  rating_db:
+    user: postgres
+    password: password
+    db: ratings
+    host: pg_db
+    port: 5432
+  reservation_db:
+    user: postgres
+    password: password
+    db: reservations
+    host: pg_db
+    port: 5432
+  statistics_db:
+    user: postgres
+    password: password
+    db: statistics
+    host: pg_db
+    port: 5432
+
+services:
+  auth:
+    host: "0.0.0.0"
+    network_host: auth_service
+    port: 8888
+    log_level: "info"
+    reload: True
+    kid: "1"
+  library:
+    host: "0.0.0.0"
+    port: 8060
+    log_level: "info"
+    reload: True
+  rating:
+    host: "0.0.0.0"
+    port: 8050
+    log_level: "info"
+    reload: True
+  reservation:
+    host: "0.0.0.0"
+    port: 8070
+    log_level: "info"
+    reload: True
+  statistics:
+    host: "0.0.0.0"
+    network_host: statistics_service
+    port: 8090
+    log_level: "info"
+    reload: True
+  gateway:
+    host: "0.0.0.0"
+    port: 8080
+    log_level: "info"
+    reload: True
+    max_num_of_fails: 2
+    timeout: 10
+    library_host: library_service
+    rating_host: rating_service
+    reservation_host: reservation_service
