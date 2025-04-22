@@ -6,7 +6,8 @@ COPY ./backend/src/rating_service /rating
 COPY ./backend/config.yaml /rating
 COPY ./backend/src/requirements.txt /rating
 
-RUN pip3.10 install -r requirements.txt
+# Попробуем по одному (или 2-3 за раз) — для теста
+RUN pip install --no-cache-dir -r requirements.txt --timeout 600 -v
 
 EXPOSE 8050
 
