@@ -37,6 +37,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd /home/${{ secrets.SSH_USERNAME }}/librareally/src
+            sudo docker compose build --no-parallel
             sudo docker compose down
             sudo docker rmi gateway_service
             sudo docker rmi library_service
