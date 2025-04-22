@@ -7,7 +7,7 @@ COPY ./backend/config.yaml /rating
 COPY ./backend/src/requirements.txt /rating
 
 # Попробуем по одному (или 2-3 за раз) — для теста
-RUN pip install --no-cache-dir -r requirements.txt --timeout 600 -v
+RUN pip install --no-cache-dir -r requirements.txt --timeout 600 -v && echo "DONE installing" && sleep 5
 
 EXPOSE 8050
 
