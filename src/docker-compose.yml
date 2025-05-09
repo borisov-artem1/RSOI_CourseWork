@@ -55,7 +55,7 @@ services:
       timeout: 2s
       retries: 5
 
-  fontend:
+  frontend:
     image: frontend
     container_name: frontend
     build:
@@ -98,9 +98,9 @@ services:
       kafka:
         condition: service_healthy
 
-  comsumer_service:
-    image: comsumer_service
-    container_name: comsumer_service
+  consumer_service:
+    image: consumer_service
+    container_name: consumer_service
     build:
       context: "."
       dockerfile: ./backend/docker/consumer.Dockerfile
