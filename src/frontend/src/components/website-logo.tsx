@@ -15,7 +15,7 @@ export function WebsiteLogo({size}: WebsiteLogoProps) {
       <Text size={size}
         className={`text-my-third-color`}
       >
-        LibraREALLY
+        BookZone
       </Text>
       <MenuBookIcon
         style={{fontSize: `var(--my-${size}-size)`, lineHeight: `var(--my-${size}-height)`}}

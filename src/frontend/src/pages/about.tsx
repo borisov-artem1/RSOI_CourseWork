@@ -78,27 +78,27 @@ export default function AboutPage() {
               color="secondary"
               size="medium"
               icon={<GitHubIcon />}
-              label="@amunra2"
+              label="@borisov-artem1"
               component="a"
               target="_blank"
               rel="noopener noreferrer"
-              href="https://github.com/amunra2"
+              href="https://github.com/borisov-artem1"
               clickable
             />
             <Chip
               color="secondary"
               icon={<TelegramIcon />}
-              label="@amunra2"
+              label="@brslvrt"
               component="a"
               target="_blank"
               rel="noopener noreferrer"
-              href="https://t.me/amunra2"
+              href="https://t.me/brslvrt"
               clickable
             />
             <Chip
               color="secondary"
               icon={<EmailIcon />}
-              label="ivancvet2001@gmail.com"
+              label="artem.borisov2002@mail.ru"
             />
           </ThemeProvider>
         </AccordionDetails>

@@ -4,9 +4,9 @@
 
 :root {
   /* COLORS */
-  --my-primary-color: #6366f1; /* tailwind: indigo-500 */
-  --my-secondary-color: #64748b ; /* tailwind: slate-500 */
-  --my-third-color: #f1f5f9; /* tailwind: slate-100 */
+  --my-primary-color: #2f855a; /* tailwind: blue-900 */
+  --my-secondary-color: #a0aec0 ; /* tailwind: gray-700 */
+  --my-third-color: #f7fafc; /* tailwind: gray-100 */
 
   /* FONT SIZE */
   --my-large-size: 36px; /* tailwind: 4xl */
