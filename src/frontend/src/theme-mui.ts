@@ -4,10 +4,10 @@ export const MyTheme = createTheme({
   cssVariables: true,
   palette: {
     primary: {
-      main: "#2f855a", /* tailwind: indigo-500 */
+      main: "#dd6b20", /* tailwind: indigo-500 */
     },
     secondary: {
-      main: "#a0aec0", /* tailwind: slate-500 */
+      main: "#2d3748", /* tailwind: slate-500 */
     },
   },
 });

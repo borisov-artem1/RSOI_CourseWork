@@ -1,5 +1,5 @@
 import React from 'react'
-import MenuBookIcon from '@mui/icons-material/MenuBook';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import Text from './text';
 
 interface WebsiteLogoProps {
@@ -17,7 +17,7 @@ export function WebsiteLogo({size}: WebsiteLogoProps) {
       >
         BookZone
       </Text>
-      <MenuBookIcon
+      <AutoStoriesIcon
         style={{fontSize: `var(--my-${size}-size)`, lineHeight: `var(--my-${size}-height)`}}
         className="text-my-third-color" 
       />

@@ -4,9 +4,11 @@
 
 :root {
   /* COLORS */
-  --my-primary-color: #2f855a; /* tailwind: blue-900 */
-  --my-secondary-color: #a0aec0 ; /* tailwind: gray-700 */
-  --my-third-color: #f7fafc; /* tailwind: gray-100 */
+  --my-primary-color: #dd6b20;   /* tailwind: orange-600 */
+  --my-secondary-color: #2d3748; /* tailwind: gray-800 */
+  --my-third-color: #fefcbf;     /* tailwind: yellow-100 */
+
+
 
   /* FONT SIZE */
   --my-large-size: 36px; /* tailwind: 4xl */
